@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'models/restaurant.dart';
 import 'widgets/item_restaurant.dart';
+import 'widgets/restaurant_widget.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,9 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         backgroundColor: Colors.amber,
       ),
-      body: RestaurantItem(Restaurant("Super Restaurant", "Super, super restaurant", 100, false
-      ), () => {}),
-      // body: Restaurants(), // This trailing comma makes auto-formatting nicer for build methods.
+
+      body: Restaurants(),
     );
   }
 }
