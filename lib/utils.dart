@@ -1,19 +1,46 @@
-
 import 'models/restaurant.dart';
 
 class RestaurantUtils {
   static List<Restaurant> getDummyRestaurants() {
-    final hoaSushi = Restaurant("Hoa Sushi", "Sushi, Salads", 10, true);
-    final burgerMe = Restaurant("BurgerMe", "Burgers, American", 25, false);
-    final telePizza =
-        Restaurant("Tele Pizza", "Italian style pizza, Snacks", 10, false);
-    final safranSalads =
-        Restaurant("Safran Salads", "Sushi, Salads", 10, false);
-    final ritaGrill = Restaurant("Rita Grill", "Arab, Burgers", 19, false);
-    final manhattanSushi =
-        Restaurant("Manhattan Sushi", "American, Sushi", 10, true);
-    final pastaRhymes =
-        Restaurant("Pasta Rhymes", "Pasta, Schnitzels", 12, false);
+    final hoaSushi = Restaurant(
+        "Hoa Sushi",
+        "Sushi, Salads, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        10,
+        true);
+    final burgerMe = Restaurant(
+        "BurgerMe",
+        "Burgers, American, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        25,
+        false,
+        "images/restaurant_three.jpg");
+    final telePizza = Restaurant(
+        "Tele Pizza",
+        "Italian style pizza, Snacks, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        10,
+        false,
+        "images/restaurant_two.jpg");
+    final safranSalads = Restaurant(
+        "Safran Salads",
+        "Sushi, Salads, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        10,
+        false,
+        "images/restaurant_three.jpg");
+    final ritaGrill = Restaurant(
+        "Rita Grill",
+        "Arab, Burgers, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        19,
+        false,
+        "images/restaurant_two.jpg");
+    final manhattanSushi = Restaurant(
+        "Manhattan Sushi",
+        "American, Sushi, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        10,
+        true);
+    final pastaRhymes = Restaurant(
+        "Pasta Rhymes",
+        "Pasta, Schnitzels, Lorem ipsum dolor sit amet, consectetur adipiscing eli",
+        12,
+        false);
 
     return [
       hoaSushi,
