@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwave_demo_app/utils.dart';
-import 'package:flutterwave_demo_app/widgets/item_meal.dart';
 
-import 'models/restaurant.dart';
-import 'widgets/item_restaurant.dart';
 import 'widgets/restaurant_widget.dart';
 
 void main() {
@@ -20,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutterwave App'),
+      home: MyHomePage(title: "Restaurants"),
     );
   }
 }
@@ -41,13 +37,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.amber,
+        backgroundColor: Colors.blue,
       ),
-
-      // body: Restaurants(),
-      body: MealItem(RestaurantUtils.getDummyMeal().first, () => {}),
+      body: Restaurants(),
     );
   }
 }

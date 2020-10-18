@@ -56,7 +56,7 @@ class RestaurantUtils {
     ];
   }
 
-  static List<Meal> getDummyMeal() {
+  static List<Meal> getDummyMeals() {
     final sushi = Meal(
         "Super Sushi",
         " Et harum quidem rerum facilis est et expedita distinctio.",
