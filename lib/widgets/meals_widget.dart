@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutterwave/core/flutterwave.dart';
 import 'package:flutterwave/flutterwave.dart';
+import 'package:flutterwave/models/responses/charge_response.dart';
 import 'package:flutterwave_demo_app/models/cart.dart';
 import 'package:flutterwave_demo_app/models/meal.dart';
 import 'package:flutterwave_demo_app/widgets/item_meal.dart';
+import 'package:flutterwave_demo_app/widgets/payment_successful.dart';
 
 class MealsWidget extends StatefulWidget {
   final List<Meal> meals;
@@ -70,10 +72,11 @@ class _MealsWidgetState extends State<MealsWidget> {
             return MealItem(
                 meal, this._handleMealClick, this.cart.items.contains(meal));
           },
-          separatorBuilder: (context, index) => Container(
-            margin: EdgeInsets.all(5),
-            child: Divider(color: Colors.black),
-          ),
+          separatorBuilder: (context, index) =>
+              Container(
+                margin: EdgeInsets.all(5),
+                child: Divider(color: Colors.black),
+              ),
         ),
       ),
     );
@@ -127,14 +130,15 @@ class _MealsWidgetState extends State<MealsWidget> {
                   trailing: IconButton(
                     icon: Icon(Icons.delete_rounded),
                     onPressed: () =>
-                        {this._removeItemFromCart(this.cart.items[index])},
+                    {this._removeItemFromCart(this.cart.items[index])},
                   ),
                 );
               },
-              separatorBuilder: (context, index) => Container(
-                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: Divider(color: Colors.black),
-              ),
+              separatorBuilder: (context, index) =>
+                  Container(
+                    margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Divider(color: Colors.black),
+                  ),
             ),
           ),
           Align(
@@ -184,11 +188,11 @@ class _MealsWidgetState extends State<MealsWidget> {
 
   void _showToast(final String message) {
     this._scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            content: (Text(message)),
-            duration: Duration(milliseconds: 1000),
-          ),
-        );
+      SnackBar(
+        content: (Text(message)),
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
   }
 
   void _removeItemFromCart(Meal meal) {
@@ -207,8 +211,8 @@ class _MealsWidgetState extends State<MealsWidget> {
   void _checkout() async {
     final Flutterwave flutterwave = Flutterwave.forUIPayment(
         context: this.context,
-        publicKey: "FLWPUBK_TEST-6f008dca68dc8988715b929f2861da41-X",
-        encryptionKey: "FLWSECK_TESTc2fa0b524ee1",
+        publicKey: "PUBLIC_KEY",
+        encryptionKey: "SECRET_KEY",
         currency: FlutterwaveCurrency.NGN,
         amount: this.cartTotal.toString(),
         email: "user@email.com",
@@ -220,8 +224,19 @@ class _MealsWidgetState extends State<MealsWidget> {
         acceptAccountPayment: true,
         acceptUSSDPayment: true);
     final response = await flutterwave.initializeForUiPayments();
-    if(response != null) {
-      print("response is $response");
+    if (response != null) {
+      if (response.status == FlutterwaveConstants.SUCCESS ||
+          response.status == FlutterwaveConstants.SUCCESSFUL)
+        this._onSuccessfulPayment(response);
+    } else {
+      this._showToast(response.message);
     }
+  }
+
+  void _onSuccessfulPayment(final ChargeResponse response) {
+    Navigator.of(this.context).push(
+        MaterialPageRoute(builder: (BuildContext context) {
+          return PaymentSuccessful();
+        }));
   }
 }

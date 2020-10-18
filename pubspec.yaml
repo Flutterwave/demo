@@ -50,6 +50,7 @@ flutter:
      - images/restaurant.jpg
      - images/restaurant_two.jpg
      - images/restaurant_three.jpg
+     - images/check.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

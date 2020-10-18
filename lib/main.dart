@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwave_demo_app/utils.dart';
+import 'package:flutterwave_demo_app/widgets/item_meal.dart';
 
 import 'widgets/restaurant_widget.dart';
 
