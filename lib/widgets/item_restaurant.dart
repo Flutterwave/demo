@@ -3,7 +3,7 @@ import 'package:flutterwave_demo_app/models/restaurant.dart';
 
 class RestaurantItem extends StatefulWidget {
   final Restaurant restaurant;
-  final Function onRestaurantClicked;
+  final Function(Restaurant) onRestaurantClicked;
 
   RestaurantItem(this.restaurant, this.onRestaurantClicked);
 
@@ -17,9 +17,8 @@ class _RestaurantItemState extends State<RestaurantItem> {
     return Container(
       width: double.infinity,
       margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-      // height: 400,
       child: GestureDetector (
-        onTap: this.widget.onRestaurantClicked,
+        onTap: this.handleRestaurantSelection,
         child: Column(
           children: [
             Padding(
@@ -27,7 +26,6 @@ class _RestaurantItemState extends State<RestaurantItem> {
               child: Image.asset(
                 this.widget.restaurant.image,
                 width: double.infinity,
-                // height: 300,
               ),
             ),
             Padding(
@@ -78,5 +76,9 @@ class _RestaurantItemState extends State<RestaurantItem> {
         ),
       ),
     );
+  }
+
+  void handleRestaurantSelection(){
+    this.widget.onRestaurantClicked(this.widget.restaurant);
   }
 }
