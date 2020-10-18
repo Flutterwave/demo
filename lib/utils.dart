@@ -1,3 +1,6 @@
+import 'package:flutterwave/flutterwave.dart';
+
+import 'models/meal.dart';
 import 'models/restaurant.dart';
 
 class RestaurantUtils {
@@ -50,6 +53,75 @@ class RestaurantUtils {
       ritaGrill,
       manhattanSushi,
       pastaRhymes
+    ];
+  }
+
+  static List<Meal> getDummyMeal() {
+    final sushi = Meal(
+        "Super Sushi",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        20,
+        35,
+        FlutterwaveCurrency.RWF);
+
+    final sourSpicy = Meal(
+        "Sour, Spicy Soup",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        12,
+        40,
+        FlutterwaveCurrency.NGN);
+
+    final seaweedSalad = Meal(
+        "Seaweed Salad",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        7,
+        20,
+        FlutterwaveCurrency.GHS);
+
+    final salmonCurry = Meal(
+        "Salmon Curry",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        20,
+        40,
+        FlutterwaveCurrency.NGN);
+
+    final avocadoMaki = Meal(
+        "Avocado Maki",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        11,
+        30,
+        FlutterwaveCurrency.ZMW);
+
+    final mangoSweet = Meal(
+        "Mango-Sweet-Sauce Sauce",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        8,
+        40,
+        FlutterwaveCurrency.RWF);
+
+    final crunchy = Meal(
+        "Crunchy Philadelphia Roll",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        10,
+        15,
+        FlutterwaveCurrency.UGX);
+
+    final chicken = Meal(
+        "Whole Chicken(Spicy)",
+        " Et harum quidem rerum facilis est et expedita distinctio.",
+        25,
+        50,
+        FlutterwaveCurrency.GHS);
+
+    return [
+      sushi,
+      sourSpicy,
+      seaweedSalad,
+      chicken,
+      crunchy,
+      salmonCurry,
+      avocadoMaki,
+      mangoSweet
     ];
   }
 }

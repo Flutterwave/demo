@@ -3,9 +3,10 @@ class Meal {
   String description;
   int quantity;
   int orderAmount;
-  int minimumDeliveryAmount;
+  String orderCurrency;
+  int minimumDeliveryTime;
 
   Meal(
-      this.name, this.description, this.orderAmount, this.minimumDeliveryAmount,
-      [this.quantity = 1]);
+      this.name, this.description, this.orderAmount, this.minimumDeliveryTime,
+      this.orderCurrency, [this.quantity = 1]);
 }

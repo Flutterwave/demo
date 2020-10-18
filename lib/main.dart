@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwave_demo_app/utils.dart';
+import 'package:flutterwave_demo_app/widgets/item_meal.dart';
 
 import 'models/restaurant.dart';
 import 'widgets/item_restaurant.dart';
@@ -44,7 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.amber,
       ),
 
-      body: Restaurants(),
+      // body: Restaurants(),
+      body: MealItem(RestaurantUtils.getDummyMeal().first, () => {}),
     );
   }
 }
