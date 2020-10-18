@@ -62,7 +62,7 @@ class RestaurantUtils {
         " Et harum quidem rerum facilis est et expedita distinctio.",
         20,
         35,
-        FlutterwaveCurrency.RWF);
+        FlutterwaveCurrency.NGN);
 
     final sourSpicy = Meal(
         "Sour, Spicy Soup",
@@ -76,7 +76,7 @@ class RestaurantUtils {
         " Et harum quidem rerum facilis est et expedita distinctio.",
         7,
         20,
-        FlutterwaveCurrency.GHS);
+        FlutterwaveCurrency.NGN);
 
     final salmonCurry = Meal(
         "Salmon Curry",
@@ -90,28 +90,28 @@ class RestaurantUtils {
         " Et harum quidem rerum facilis est et expedita distinctio.",
         11,
         30,
-        FlutterwaveCurrency.ZMW);
+        FlutterwaveCurrency.NGN);
 
     final mangoSweet = Meal(
         "Mango-Sweet-Sauce Sauce",
         " Et harum quidem rerum facilis est et expedita distinctio.",
         8,
         40,
-        FlutterwaveCurrency.RWF);
+        FlutterwaveCurrency.NGN);
 
     final crunchy = Meal(
         "Crunchy Philadelphia Roll",
         " Et harum quidem rerum facilis est et expedita distinctio.",
         10,
         15,
-        FlutterwaveCurrency.UGX);
+        FlutterwaveCurrency.NGN);
 
     final chicken = Meal(
         "Whole Chicken(Spicy)",
         " Et harum quidem rerum facilis est et expedita distinctio.",
         25,
         50,
-        FlutterwaveCurrency.GHS);
+        FlutterwaveCurrency.NGN);
 
     return [
       sushi,

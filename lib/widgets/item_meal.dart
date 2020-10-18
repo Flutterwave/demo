@@ -4,8 +4,9 @@ import 'package:flutterwave_demo_app/models/meal.dart';
 class MealItem extends StatelessWidget {
   final Meal meal;
   final Function onMealClick;
+  final bool disableButton;
 
-  MealItem(this.meal, this.onMealClick);
+  MealItem(this.meal, this.onMealClick, this.disableButton);
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class MealItem extends StatelessWidget {
             height: 50,
             margin: EdgeInsets.fromLTRB(5, 10, 0, 5),
             child: RaisedButton(
-              onPressed: this._onMealClick,
+              onPressed: this.disableButton ? null: this._onMealClick,
               child: Text(
                 "ADD TO CART",
                 style:

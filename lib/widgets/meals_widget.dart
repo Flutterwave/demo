@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterwave/core/flutterwave.dart';
+import 'package:flutterwave/flutterwave.dart';
 import 'package:flutterwave_demo_app/models/cart.dart';
 import 'package:flutterwave_demo_app/models/meal.dart';
 import 'package:flutterwave_demo_app/widgets/item_meal.dart';
@@ -13,14 +15,16 @@ class MealsWidget extends StatefulWidget {
 }
 
 class _MealsWidgetState extends State<MealsWidget> {
-  final Cart cart = Cart();
+  Cart cart = Cart();
+  int cartLength;
   int cartTotal;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    this.cartTotal = this.cart.items.length;
+    this.cartLength = this.cart.items.length;
+    this.cartTotal = this.cart.getTotal();
   }
 
   @override
@@ -44,7 +48,7 @@ class _MealsWidgetState extends State<MealsWidget> {
                   children: [
                     Icon(Icons.shopping_cart_rounded, size: 30),
                     Text(
-                      "${this.cartTotal}",
+                      "${this.cartLength}",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -62,7 +66,9 @@ class _MealsWidgetState extends State<MealsWidget> {
         child: ListView.separated(
           itemCount: this.widget.meals.length,
           itemBuilder: (context, index) {
-            return MealItem(this.widget.meals[index], this._handleMealClick);
+            final Meal meal = this.widget.meals[index];
+            return MealItem(
+                meal, this._handleMealClick, this.cart.items.contains(meal));
           },
           separatorBuilder: (context, index) => Container(
             margin: EdgeInsets.all(5),
@@ -77,15 +83,16 @@ class _MealsWidgetState extends State<MealsWidget> {
     this._showToast("${meal.name} added to cart.");
     this.cart.addMealToCart(meal);
     this.setState(() {
-      this.cartTotal = this.cart.items.length;
+      this.cartLength = this.cart.items.length;
+      this.cartTotal = this.cart.getTotal();
     });
   }
 
   Widget _cartItems() {
-    final itemSize = this.cart.items.length == 0 ? 1 : this.cart.items.length;
+    final itemSize = this.cart.items.isEmpty ? 1 : this.cart.items.length;
     return Container(
       width: double.infinity,
-      height: (150 * itemSize).toDouble(),
+      height: this.cart.items.length == 1 ? 150 : (150 * itemSize).toDouble(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -119,7 +126,8 @@ class _MealsWidgetState extends State<MealsWidget> {
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.delete_rounded),
-                    onPressed: () => { this._removeItemFromCart(this.cart.items[index])},
+                    onPressed: () =>
+                        {this._removeItemFromCart(this.cart.items[index])},
                   ),
                 );
               },
@@ -136,9 +144,9 @@ class _MealsWidgetState extends State<MealsWidget> {
               height: 40,
               margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
               child: RaisedButton(
-                onPressed: () => {},
+                onPressed: this._checkout,
                 child: Text(
-                  "PAY TOTAL ${this.cart.getTotal()}",
+                  "PAY TOTAL ${FlutterwaveCurrency.NGN}${this.cartTotal}.00",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
@@ -186,7 +194,34 @@ class _MealsWidgetState extends State<MealsWidget> {
   void _removeItemFromCart(Meal meal) {
     this.setState(() {
       this.cart.items = this.cart.removeMealFromCart(meal);
-      this.cartTotal = this.cart.items.length;
+      this.cartLength = this.cart.items.length;
     });
+    this._refreshCart();
+  }
+
+  void _refreshCart() {
+    Navigator.of(this.context).pop();
+    this._showCart();
+  }
+
+  void _checkout() async {
+    final Flutterwave flutterwave = Flutterwave.forUIPayment(
+        context: this.context,
+        publicKey: "FLWPUBK_TEST-6f008dca68dc8988715b929f2861da41-X",
+        encryptionKey: "FLWSECK_TESTc2fa0b524ee1",
+        currency: FlutterwaveCurrency.NGN,
+        amount: this.cartTotal.toString(),
+        email: "user@email.com",
+        fullName: "Restaurant Customer",
+        txRef: "shopper_${DateTime.now()}",
+        isDebugMode: true,
+        phoneNumber: "0123456789",
+        acceptCardPayment: true,
+        acceptAccountPayment: true,
+        acceptUSSDPayment: true);
+    final response = await flutterwave.initializeForUiPayments();
+    if(response != null) {
+      print("response is $response");
+    }
   }
 }

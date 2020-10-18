@@ -5,9 +5,12 @@ class Cart {
   int total = 0;
 
   int getTotal() {
-    this.items.map((meal) => {
-      this.total = this.total + (meal.orderAmount * meal.quantity)
-    });
+    if (this.items.isEmpty) return 0;
+    for( var i = 0 ; i < items.length; i++ ) {
+      final Meal meal = items[i];
+      print(items[i]);
+      this.total = this.total + (meal.orderAmount * meal.quantity);
+    }
     return this.total;
   }
 
