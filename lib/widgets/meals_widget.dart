@@ -82,14 +82,6 @@ class _MealsWidgetState extends State<MealsWidget> {
     );
   }
 
-  void _handleMealClick(final Meal meal) {
-    this._showToast("${meal.name} added to cart.");
-    this.cart.addMealToCart(meal);
-    this.setState(() {
-      this.cartLength = this.cart.items.length;
-      this.cartTotal = this.cart.getTotal();
-    });
-  }
 
   Widget _cartItems() {
     final itemSize = this.cart.items.isEmpty ? 1 : this.cart.items.length;
@@ -186,19 +178,20 @@ class _MealsWidgetState extends State<MealsWidget> {
     );
   }
 
-  void _showToast(final String message) {
-    this._scaffoldKey.currentState.showSnackBar(
-      SnackBar(
-        content: (Text(message)),
-        duration: Duration(milliseconds: 1000),
-      ),
-    );
+  void _handleMealClick(final Meal meal) {
+    this._showToast("${meal.name} added to cart.");
+    this.cart.addMealToCart(meal);
+    this.setState(() {
+      this.cartLength = this.cart.items.length;
+      this.cartTotal = this.cart.getTotal();
+    });
   }
 
   void _removeItemFromCart(Meal meal) {
     this.setState(() {
       this.cart.items = this.cart.removeMealFromCart(meal);
       this.cartLength = this.cart.items.length;
+      this.cartTotal = this.cart.getTotal();
     });
     this._refreshCart();
   }
@@ -206,6 +199,15 @@ class _MealsWidgetState extends State<MealsWidget> {
   void _refreshCart() {
     Navigator.of(this.context).pop();
     this._showCart();
+  }
+
+  void _showToast(final String message) {
+    this._scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content: (Text(message)),
+        duration: Duration(milliseconds: 1000),
+      ),
+    );
   }
 
   void _checkout() async {
