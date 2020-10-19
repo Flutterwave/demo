@@ -214,7 +214,7 @@ class _MealsWidgetState extends State<MealsWidget> {
     final Flutterwave flutterwave = Flutterwave.forUIPayment(
         context: this.context,
         publicKey: "PUBLIC_KEY",
-        encryptionKey: "SECRET_KEY",
+        encryptionKey: "ENCRYPTION_KEY",
         currency: FlutterwaveCurrency.NGN,
         amount: this.cartTotal.toString(),
         email: "user@email.com",
