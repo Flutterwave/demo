@@ -2,16 +2,15 @@ import 'meal.dart';
 
 class Cart {
   List<Meal> items = [];
-  int total = 0;
 
   int getTotal() {
     if (this.items.isEmpty) return 0;
+    var total = 0;
     for( var i = 0 ; i < items.length; i++ ) {
       final Meal meal = items[i];
-      print(items[i]);
-      this.total = this.total + (meal.orderAmount * meal.quantity);
+      total = total + (meal.orderAmount * meal.quantity);
     }
-    return this.total;
+    return total;
   }
 
   List<Meal> removeMealFromCart(final Meal meal) {
