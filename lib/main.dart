@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwave_demo_app/utils.dart';
-import 'package:flutterwave_demo_app/widgets/item_meal.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
 
 import 'widgets/restaurant_widget.dart';
 
@@ -41,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
           widget.title,
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: HexColor("F5A623"),
       ),
       body: Restaurants(),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
 import 'package:flutterwave/core/flutterwave.dart';
 import 'package:flutterwave/flutterwave.dart';
 import 'package:flutterwave/models/responses/charge_response.dart';
@@ -38,7 +39,7 @@ class _MealsWidgetState extends State<MealsWidget> {
           "Meals",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: HexColor("F5A623"),
         actions: [
           Padding(
             padding: EdgeInsets.all(10),
@@ -81,7 +82,6 @@ class _MealsWidgetState extends State<MealsWidget> {
       ),
     );
   }
-
 
   Widget _cartItems() {
     final itemSize = this.cart.items.isEmpty ? 1 : this.cart.items.length;
@@ -141,12 +141,17 @@ class _MealsWidgetState extends State<MealsWidget> {
               margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
               child: RaisedButton(
                 onPressed: this._checkout,
+                disabledColor: HexColor("FFEAC6"),
+                hoverColor: HexColor("FFC058"),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
                 child: Text(
                   "PAY TOTAL ${FlutterwaveCurrency.NGN}${this.cartTotal}.00",
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                color: Colors.blue,
+                color: HexColor("F5A623"),
               ),
             ),
           )
@@ -179,7 +184,7 @@ class _MealsWidgetState extends State<MealsWidget> {
   }
 
   void _handleMealClick(final Meal meal) {
-    this._showToast("${meal.name} added to cart.");
+    this._showSnackBar("${meal.name} added to cart.");
     this.cart.addMealToCart(meal);
     this.setState(() {
       this.cartLength = this.cart.items.length;
@@ -201,11 +206,19 @@ class _MealsWidgetState extends State<MealsWidget> {
     this._showCart();
   }
 
-  void _showToast(final String message) {
+  void _showSnackBar(final String message) {
     this._scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        content: (Text(message)),
+        content: (Text(
+          message,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 18),
+        )),
         duration: Duration(milliseconds: 1000),
+        backgroundColor: HexColor("F5A623"),
       ),
     );
   }
@@ -231,14 +244,14 @@ class _MealsWidgetState extends State<MealsWidget> {
           response.status == FlutterwaveConstants.SUCCESSFUL)
         this._onSuccessfulPayment(response);
     } else {
-      this._showToast(response.message);
+      this._showSnackBar(response.message);
     }
   }
 
   void _onSuccessfulPayment(final ChargeResponse response) {
-    Navigator.of(this.context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return PaymentSuccessful();
-        }));
+    Navigator.of(this.context)
+        .push(MaterialPageRoute(builder: (BuildContext context) {
+      return PaymentSuccessful();
+    }));
   }
 }

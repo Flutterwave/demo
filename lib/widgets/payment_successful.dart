@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
 
 import '../main.dart';
 
@@ -25,7 +26,12 @@ class PaymentSuccessful extends StatelessWidget {
               height: 50,
               margin: EdgeInsets.fromLTRB(40, 10, 40, 0),
               child: RaisedButton(
-                color: Colors.blue,
+                color: HexColor("F5A623"),
+                disabledColor: HexColor("FFEAC6"),
+                hoverColor: HexColor("FFC058"),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
                 onPressed: () => {
                   Navigator.pushAndRemoveUntil(
                     context,

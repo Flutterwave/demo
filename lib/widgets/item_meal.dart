@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
 import 'package:flutterwave_demo_app/models/meal.dart';
 
 class MealItem extends StatelessWidget {
@@ -72,15 +73,20 @@ class MealItem extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 50,
-            margin: EdgeInsets.fromLTRB(5, 10, 0, 5),
+            margin: EdgeInsets.fromLTRB(20, 10, 20, 5),
             child: RaisedButton(
               onPressed: this.disableButton ? null: this._onMealClick,
+              disabledColor: HexColor("FFEAC6"),
+              hoverColor: HexColor("FFC058"),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4.0),
+              ),
               child: Text(
                 "ADD TO CART",
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
-              color: Colors.blue,
+              color: HexColor("F5A623"),
             ),
           ),
         ],
