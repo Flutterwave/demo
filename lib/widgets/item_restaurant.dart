@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
 import 'package:flutterwave_demo_app/models/restaurant.dart';
 
 class RestaurantItem extends StatefulWidget {
@@ -56,6 +57,7 @@ class _RestaurantItemState extends State<RestaurantItem> {
                           ? Icons.favorite_rounded
                           : Icons.favorite_border_rounded,
                       size: 30,
+                      color: HexColor("F5A623"),
                     ),
                   )
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
+import 'package:flutterwave_demo_app/utils.dart';
 
 import '../main.dart';
 
@@ -32,16 +33,7 @@ class PaymentSuccessful extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                onPressed: () => {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          MyHomePage(title: "Restaurants"),
-                    ),
-                    (route) => false,
-                  )
-                },
+                onPressed: () => { RestaurantUtils.openHomePage(context) },
                 child: Text(
                   "CONTINUE SHOPPING",
                   style: TextStyle(

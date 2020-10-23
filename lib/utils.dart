@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutterwave/flutterwave.dart';
+import 'package:flutterwave_demo_app/main.dart';
 
 import 'models/meal.dart';
 import 'models/restaurant.dart';
@@ -123,5 +125,21 @@ class RestaurantUtils {
       avocadoMaki,
       mangoSweet
     ];
+  }
+
+  static openNewScreenAndPopPreviousScreens(final BuildContext context, final Widget widget) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => widget),
+          (route) => false,
+    );
+  }
+
+  static openHomePage(final BuildContext context) {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => MyHomePage(title: "Restaurants",)),
+          (route) => false,
+    );
   }
 }

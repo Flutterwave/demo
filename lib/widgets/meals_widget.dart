@@ -120,7 +120,7 @@ class _MealsWidgetState extends State<MealsWidget> {
                     ],
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete_rounded),
+                    icon: Icon(Icons.delete_rounded, color: HexColor("F5A623"),),
                     onPressed: () =>
                     {this._removeItemFromCart(this.cart.items[index])},
                   ),
