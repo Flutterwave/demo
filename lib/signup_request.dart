@@ -1,14 +1,14 @@
-class Authentication {
-  String firstName;
-  String lastName;
+class SignUpRequest {
+  String firstName = "";
+  String lastName = "";
   String email;
   String password;
   String country = "Nigeria";
-  String phoneNumber;
+  String phoneNumber = "";
 
-  Authentication({this.firstName, this.lastName, this.email, this.password, this.phoneNumber});
+  SignUpRequest({this.firstName, this.lastName, this.email, this.password, this.phoneNumber});
 
-  Authentication.fromJson(final Map json) {
+  SignUpRequest.fromJson(final Map json) {
     this.firstName = json["f_name"];
     this.lastName = json["l_name"];
     this.email = json["email"];

@@ -1,10 +1,12 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hex_color/flutter_hex_color.dart';
+import 'package:flutterwave_demo_app/login_request.dart';
+import 'package:flutterwave_demo_app/network/authentication_service.dart';
 import 'package:flutterwave_demo_app/utils.dart';
 import 'package:flutterwave_demo_app/widgets/signup.dart';
+import 'package:flutterwave_demo_app/widgets/widget_utils.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_hex_color/flutter_hex_color.dart';
-import 'package:flutterwave_demo_app/authentication.dart';
-import 'package:flutterwave_demo_app/network/authentication_service.dart';
 
 class LoginWidget extends StatefulWidget {
   @override
@@ -18,9 +20,12 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: this._scaffoldKey,
       appBar: AppBar(
         title: Text(
           "Login",
@@ -122,8 +127,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 
   _handleLoginButtonClick() {
-    // if (_formKey.currentState.validate()) _logUserIn();
-    RestaurantUtils.openHomePage(context);
+    if (_formKey.currentState.validate()) _logUserIn();
   }
 
   _logUserIn() async {
@@ -132,20 +136,21 @@ class _LoginWidgetState extends State<LoginWidget> {
 
     final authService = AuthService(http.Client());
 
-    final Authentication authBody = Authentication(
+    final LoginRequest request = LoginRequest(
         email: email,
         password: password);
     // show loader
     try {
-      final response = await authService.signUp(authBody);
-      print("login response is $response");
+      final response = await authService.login(request);
+      return RestaurantUtils.openHomePage(context);
       // hide loader
-    } catch (exception) {
+    } catch (error, stacktrace) {
+      WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
       // hide loader
     }
   }
 
   void _openSignUpPage() {
-    RestaurantUtils.openNewScreenAndPopPreviousScreens(this.context, SignUpWidget());
+    RestaurantUtils.openNewScreenAndPopPreviousScreens(context, SignUpWidget());
   }
 }

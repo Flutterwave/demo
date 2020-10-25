@@ -184,7 +184,7 @@ class _MealsWidgetState extends State<MealsWidget> {
   }
 
   void _handleMealClick(final Meal meal) {
-    this._showSnackBar("${meal.name} added to cart.");
+    this._showSnackBar(this._scaffoldKey.currentState, "${meal.name} added to cart.");
     this.cart.addMealToCart(meal);
     this.setState(() {
       this.cartLength = this.cart.items.length;
@@ -206,8 +206,8 @@ class _MealsWidgetState extends State<MealsWidget> {
     this._showCart();
   }
 
-  void _showSnackBar(final String message) {
-    this._scaffoldKey.currentState.showSnackBar(
+  void _showSnackBar(final ScaffoldState state, final String message) {
+    state.showSnackBar(
       SnackBar(
         content: (Text(
           message,
@@ -244,7 +244,7 @@ class _MealsWidgetState extends State<MealsWidget> {
           response.status == FlutterwaveConstants.SUCCESSFUL)
         this._onSuccessfulPayment(response);
     } else {
-      this._showSnackBar(response.message);
+      this._showSnackBar(this._scaffoldKey.currentState, response.message);
     }
   }
 

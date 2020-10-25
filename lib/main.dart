@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
-import 'package:flutterwave_demo_app/widgets/signup.dart';
+import 'package:flutterwave_demo_app/widgets/login.dart';
 
 import 'widgets/restaurant_widget.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "FLW"
       ),
       // home: MyHomePage(title: "Restaurants"),
-      home: SignUpWidget(),
+      home: LoginWidget(),
     );
   }
 }
