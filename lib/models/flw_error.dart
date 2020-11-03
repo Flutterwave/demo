@@ -8,6 +8,7 @@ class FLWError implements Exception {
 
   String _getNetworkError() {
     if (message == null) return " ";
+    print("error message is $message");
     final dynamic error = message["error"];
     try {
       if(error.runtimeType == String) return error;

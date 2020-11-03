@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hex_color/flutter_hex_color.dart';
 import 'package:flutterwave_demo_app/login_request.dart';
@@ -13,7 +12,8 @@ class LoginWidget extends StatefulWidget {
   _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginWidgetState extends State<LoginWidget>
+    with TickerProviderStateMixin {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -21,9 +21,28 @@ class _LoginWidgetState extends State<LoginWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  AnimationController _animationController;
+  bool _isLoaderShowing;
+
+  @override
+  void initState() {
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 5),
+      vsync: this,
+    )
+      ..repeat();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       key: this._scaffoldKey,
       appBar: AppBar(
@@ -34,94 +53,100 @@ class _LoginWidgetState extends State<LoginWidget> {
         backgroundColor: HexColor("F5A623"),
       ),
       body: Container(
-        width: double.infinity,
-        margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
-        child: Column(
-          children: [
-            Container(
-              height: 70,
-              margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
-              child: Image.asset("images/flutterwave.png"),
-            ),
-            Form(
-              key: this._formKey,
-              child: Container(
-                height: 260,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextFormField(
-                      controller: this._emailController,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.email),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.black),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("F8F8F9")),
+          width: double.infinity,
+          margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
+          child: Column(
+            children: [
+              Container(
+                height: 70,
+                margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
+                child: Image.asset("images/flutterwave.png"),
+              ),
+              Form(
+                key: this._formKey,
+                child: Container(
+                  height: 260,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextFormField(
+                        controller: this._emailController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.email),
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("F8F8F9")),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("6272C1")),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DB000C")),
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("6272C1")),
+                        validator: (value) =>
+                        value.isEmpty
+                            ? "Email is required"
+                            : null,
+                      ),
+                      TextFormField(
+                        controller: this._passwordController,
+                        obscureText: true,
+                        obscuringCharacter: "*",
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.remove_red_eye_rounded),
+                          labelText: "Password",
+                          labelStyle: TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("F8F8F9")),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("6272C1")),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: HexColor("DB000C")),
+                          ),
                         ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("DB000C")),
+                        validator: (value) =>
+                        value.isEmpty
+                            ? "Password is required"
+                            : null,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: RaisedButton(
+                          onPressed: _handleLoginButtonClick,
+                          color: HexColor("F5A623"),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                          ),
+                          child: Text(
+                            "Login",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18),
+                          ),
                         ),
                       ),
-                      validator: (value) => value.isEmpty ? "Email is required" : null,
-                    ),
-                    TextFormField(
-                      controller: this._passwordController,
-                      obscureText: true,
-                      obscuringCharacter: "*",
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.remove_red_eye_rounded),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.black),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("F8F8F9")),
+                      Container(
+                        child: GestureDetector(
+                          onTap: _openSignUpPage,
+                          child: Text(
+                            "New? Register here",
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                          ),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("6272C1")),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: HexColor("DB000C")),
-                        ),
-                      ),
-                      validator: (value) => value.isEmpty ? "Password is required" : null,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 50,
-                      child: RaisedButton(
-                        onPressed: _handleLoginButtonClick,
-                        color: HexColor("F5A623"),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        child: Text(
-                          "Login",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: GestureDetector(
-                        onTap: _openSignUpPage,
-                        child: Text(
-                          "New? Register here",
-                          style: TextStyle(color: Colors.black, fontSize: 20),
-                        ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        )
+            ],
+          )
       ),
     );
   }
@@ -139,18 +164,30 @@ class _LoginWidgetState extends State<LoginWidget> {
     final LoginRequest request = LoginRequest(
         email: email,
         password: password);
-    // show loader
+    _showProgress();
     try {
       final response = await authService.login(request);
       return RestaurantUtils.openHomePage(context);
-      // hide loader
     } catch (error, stacktrace) {
       WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
-      // hide loader
+    } finally {
+      _removeProgress();
     }
   }
 
   void _openSignUpPage() {
     RestaurantUtils.openNewScreenAndPopPreviousScreens(context, SignUpWidget());
+  }
+
+  void _showProgress() {
+    WidgetUtils.showProgressDialog(context, _animationController);
+    _isLoaderShowing = true;
+  }
+
+  void _removeProgress() {
+    if (_isLoaderShowing) {
+      _isLoaderShowing = false;
+      Navigator.of(context).pop();
+    }
   }
 }
