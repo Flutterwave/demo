@@ -55,97 +55,107 @@ class _LoginWidgetState extends State<LoginWidget>
       body: Container(
           width: double.infinity,
           margin: EdgeInsets.fromLTRB(40, 50, 40, 0),
-          child: Column(
-            children: [
-              Container(
-                height: 70,
-                margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
-                child: Image.asset("images/flutterwave.png"),
-              ),
-              Form(
-                key: this._formKey,
-                child: Container(
-                  height: 260,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      TextFormField(
-                        controller: this._emailController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.email),
-                          labelText: "Email",
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("F8F8F9")),
+          child: SingleChildScrollView(
+            child:  Column(
+              children: [
+                Container(
+                  height: 50,
+                  margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
+                  child: Image.asset("images/flutterwave.png"),
+                ),
+                Form(
+                  key: this._formKey,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextFormField(
+                          controller: this._emailController,
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email),
+                            labelText: "Email",
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("F8F8F9")),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("6272C1")),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("DB000C")),
+                            ),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("6272C1")),
+                          validator: (value) =>
+                          value.isEmpty
+                              ? "Email is required"
+                              : null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        TextFormField(
+                          controller: this._passwordController,
+                          obscureText: true,
+                          obscuringCharacter: "*",
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.remove_red_eye_rounded),
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("F8F8F9")),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("6272C1")),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: HexColor("DB000C")),
+                            ),
                           ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("DB000C")),
+                          validator: (value) =>
+                          value.isEmpty
+                              ? "Password is required"
+                              : null,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: RaisedButton(
+                            onPressed: _handleLoginButtonClick,
+                            color: HexColor("F5A623"),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: Text(
+                              "Login",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
                           ),
                         ),
-                        validator: (value) =>
-                        value.isEmpty
-                            ? "Email is required"
-                            : null,
-                      ),
-                      TextFormField(
-                        controller: this._passwordController,
-                        obscureText: true,
-                        obscuringCharacter: "*",
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.remove_red_eye_rounded),
-                          labelText: "Password",
-                          labelStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("F8F8F9")),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("6272C1")),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: HexColor("DB000C")),
-                          ),
+                        SizedBox(
+                          height: 5,
                         ),
-                        validator: (value) =>
-                        value.isEmpty
-                            ? "Password is required"
-                            : null,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: RaisedButton(
-                          onPressed: _handleLoginButtonClick,
-                          color: HexColor("F5A623"),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4.0),
+                        Container(
+                          child: GestureDetector(
+                            onTap: _openSignUpPage,
+                            child: Text(
+                              "New? Register here",
+                              style: TextStyle(color: Colors.black, fontSize: 16),
+                            ),
                           ),
-                          child: Text(
-                            "Login",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: GestureDetector(
-                          onTap: _openSignUpPage,
-                          child: Text(
-                            "New? Register here",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
-                          ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           )
       ),
     );
@@ -166,12 +176,12 @@ class _LoginWidgetState extends State<LoginWidget>
         password: password);
     _showProgress();
     try {
-      final response = await authService.login(request);
-      return RestaurantUtils.openHomePage(context);
-    } catch (error, stacktrace) {
-      WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
-    } finally {
+      await authService.login(request);
       _removeProgress();
+      RestaurantUtils.openHomePage(context);
+    } catch (error, stacktrace) {
+      _removeProgress();
+      WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
     }
   }
 

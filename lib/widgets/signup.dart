@@ -32,8 +32,7 @@ class _SignUpWidgetState extends State<SignUpWidget>
     _animationController = AnimationController(
       duration: const Duration(seconds: 10),
       vsync: this,
-    )
-      ..repeat();
+    )..repeat();
     super.initState();
   }
 
@@ -58,20 +57,19 @@ class _SignUpWidgetState extends State<SignUpWidget>
       body: Container(
         width: double.infinity,
         margin: EdgeInsets.fromLTRB(40, 20, 40, 0),
-        child: Column(
-          children: [
-            Container(
-              height: 70,
-              margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
-              child: Image.asset("images/flutterwave.png"),
-            ),
-            Form(
-              key: this._formKey,
-              child: Container(
-                // height: 450,
-                child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                margin: EdgeInsets.fromLTRB(40, 0, 40, 20),
+                child: Image.asset("images/flutterwave.png"),
+              ),
+              Form(
+                key: this._formKey,
+                child: Container(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextFormField(
                         controller: this._firstNameController,
@@ -90,7 +88,10 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "First Name is required" : null,
+                            value.isEmpty ? "First Name is required" : null,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         controller: this._lastNameController,
@@ -111,7 +112,10 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "Last Name is required" : null,
+                            value.isEmpty ? "Last Name is required" : null,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         controller: this._emailController,
@@ -130,11 +134,13 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "Email is required" : null,
+                            value.isEmpty ? "Email is required" : null,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         controller: this._phoneController,
-                        obscureText: true,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.phone),
                           labelText: "Phone Number",
@@ -150,7 +156,10 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "Phone number is required" : null,
+                            value.isEmpty ? "Phone number is required" : null,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
                         controller: this._passwordController,
@@ -171,7 +180,10 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                         validator: (value) =>
-                        value.isEmpty ? "Password is required" : null,
+                            value.isEmpty ? "Password is required" : null,
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                       Container(
                         width: double.infinity,
@@ -193,22 +205,24 @@ class _SignUpWidgetState extends State<SignUpWidget>
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Container(
                         child: GestureDetector(
                           onTap: _openLoginPage,
                           child: Text(
                             "Already have an account? Sign in",
-                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            style: TextStyle(color: Colors.black, fontSize: 16),
                           ),
                         ),
                       )
                     ],
                   ),
                 ),
-
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -234,13 +248,12 @@ class _SignUpWidgetState extends State<SignUpWidget>
         phoneNumber: phoneNumber);
     _showProgress();
     try {
-      final response = await authService.signUp(authBody);
-      print("signup response is $response");
-      return RestaurantUtils.openHomePage(context);
-    } catch (error) {
-      WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
-    } finally {
+      await authService.signUp(authBody);
       _removeProgress();
+      RestaurantUtils.openHomePage(context);
+    } catch (error) {
+      _removeProgress();
+      WidgetUtils.showSnackBar(_scaffoldKey.currentState, error.toString());
     }
   }
 
@@ -259,5 +272,4 @@ class _SignUpWidgetState extends State<SignUpWidget>
       Navigator.of(context).pop();
     }
   }
-
 }
